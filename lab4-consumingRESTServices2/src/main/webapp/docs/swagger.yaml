@@ -1,0 +1,742 @@
+openapi: 3.0.0
+servers: 
+  - url: 'https://easy-trip-350018.ew.r.appspot.com/api/v1' 
+info:
+  description: EASY TRIP is an API REST Project made with Java, the purpose of this api is to facilitate the creation and use of flights and passengers.
+  version: 1.0.0
+  title: EASY-TRIP
+  contact:
+    email: miggonort1@alum.us.es
+  license:
+    name: Github Project
+    url: 'https://github.com/miggonort1/EASY-TRIP'
+tags:
+  - name: Passengers
+    description: Passenger methods
+  - name: Flights
+    description: Flight methods
+paths:
+  /passengers:
+    get:
+      tags:
+        - Passengers
+      summary: Get all the passengers
+      description: Get all the existing passengers
+      operationId: getAllPassengers
+      parameters:
+        - name: order
+          in: query
+          description: Order results by name, surname or age
+          required: false
+          schema:
+            type: string
+            enum:
+              - name
+              - '-name'
+              - surname
+              - '-surname'
+              - age
+              - '-age'
+        - name: q
+          in: query
+          description: Query to filter
+          required: false
+          schema:
+            type: string
+        - name: limit
+          in: query
+          description:  Maximum number of results
+          required: false
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+        - name: offset
+          in: query
+          description: Offset of the results
+          required: false
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+      responses:
+        '200':
+          description: Search results matching criteria
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - name
+                  properties:
+                    id:
+                      type: string
+                    name:
+                      type: string
+                    surname:
+                      type: string
+                    age:
+                      type: string
+                  example:
+                    id: p1
+                    name: Roberto
+                    surname: García Martínez
+                    age: '23'
+        '400':
+          description: Bad request
+    post:
+      tags:
+        - Passengers
+      summary: Create a passenger
+      description: Create a new passenger
+      operationId: addPassenger
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - id
+                - name
+                - surname
+                - age
+              properties:
+                id:
+                  type: string
+                name:
+                  type: string
+                surname:
+                  type: string
+                age:
+                  type: string
+              example:
+                id: p40
+                name: Alejandro
+                surname: Sayago Rico
+                age: '33'
+        description: Passenger to create
+        required: true
+      responses:
+        '201':
+          description: Passenger created
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - name
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+                  surname:
+                    type: string
+                  age:
+                    type: string
+                example:
+                  id: p40
+                  name: Alejandro
+                  surname: Sayago Rico
+                  age: '33'
+        '400':
+          description: Bad request
+    put:
+      tags:
+        - Passengers
+      summary: Update a passenger
+      description: Update an existing passenger
+      operationId: updatePassenger
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - id
+                - name
+                - surname
+                - age
+              properties:
+                id:
+                  type: string
+                name:
+                  type: string
+                surname:
+                  type: string
+                age:
+                  type: string
+              example:
+                id: p5
+                name: Carlos
+                surname: Conde Sánchez
+                songs: '23'
+        description: Passenger to update
+      responses:
+        '204':
+          description: Passenger updated
+        '400':
+          description: Bad request
+        '404':
+          description: Passenger not found
+  '/passengers/{passengerId}':
+    get:
+      tags:
+        - Passengers
+      summary: Get a passenger
+      description: Get an existing passenger
+      operationId: getPassenger
+      parameters:
+        - name: passengerId
+          in: path
+          description: Id of the passenger
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Passenger found
+          content:
+            application/json:
+              schema:
+                required:
+                  - name
+                properties:
+                  id:
+                    type: string
+                  name:
+                    type: string
+                  surname:
+                    type: string
+                  age:
+                    type: array
+                example:
+                  id: p40
+                  name: Carlos
+                  surname: Conde Sánchez
+                  age: '33'
+        '404':
+          description: Passenger not found
+    delete:
+      tags:
+        - Passengers
+      summary: Delete a passenger
+      description: Delete an existing passenger
+      operationId: deletePassenger
+      parameters:
+        - name: passengerId
+          in: path
+          description: Id of the passenger
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Passenger deleted
+        '404':
+          description: Passenger not found
+  /flights:
+    get:
+      tags:
+        - Flights
+      summary: Get all the flights
+      description: Get all existing flights
+      operationId: getAllFlights
+      parameters:
+        - name: order
+          in: query
+          description: Order results by origin, destination, airlines or model
+          required: false
+          schema:
+            type: string
+            enum:
+              - origin
+              - '-origin'
+              - destination
+              - '-destination'
+              - airline
+              - '-airline'
+              - model
+              - '-model'
+        - name: isEmpty
+          in: query
+          description: Filter flights with no passengers
+          required: false
+          schema:
+            type: boolean
+        - name: origin
+          in: query
+          description: Filter flights by origin
+          required: false
+          schema:
+            type: string
+        - name: destination
+          in: query
+          description: Filter flights by destination
+          required: false
+          schema:
+            type: string
+        - name: airline
+          in: query
+          description: Filter flights by airline
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Search results matching criteria
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  required:
+                    - id
+                  properties:
+                    id:
+                      type: string
+                    origin:
+                      type: string
+                    destination:
+                      type: string
+                    airline:
+                      type: string
+                    model:
+                      type: string
+                    passengers:
+                      type: array
+                      items:
+                        type: object
+                        required:
+                          - name
+                        properties:
+                          id:
+                            type: string
+                          name:
+                            type: string
+                          surname:
+                            type: string
+                          age:
+                            type: string
+                  example:
+                    id: f1
+                    origin: Madrid  
+                    destination: Barcelona
+                    airline: Iberia
+                    model: Airbus A330-300
+                    passangers:
+                      - id: p1
+                        name: Roberto
+                        surname: García Martínez
+                        age: '23'
+        '400':
+          description: Bad request
+    put:
+      tags:
+        - Flights
+      summary: Update a flight
+      description: Update an existing flight
+      operationId: updateFlight
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - id
+                - origin
+                - destination
+                - airline
+              properties:
+                id:
+                  type: string
+                origin:
+                  type: string
+                destination:
+                  type: string
+                airline:
+                  type: string
+                model:
+                  type: string
+                passengers:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - name
+                    properties:
+                      id:
+                        type: string
+                      name:
+                        type: string
+                      surname:
+                        type: string
+                      age:
+                        type: string
+              example:
+                id: f1
+                origin: Barcelona
+                destination: Madrid 
+                airline: Iberia
+                model: Airbus A330-300
+                passengers:
+                  - id: p1
+                    name: Roberto
+                    surname: García Martínez 
+                    age: '23'
+        description: Flight to update
+      responses:
+        '204':
+          description: Flight updated
+        '400':
+          description: Bad request
+        '404':
+          description: Flight not found
+    post:
+      tags:
+        - Flights
+      summary: Create a flight
+      description: Create a new flight
+      operationId: addFlight
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - id
+                - origin
+                - destination
+                - airline
+              properties:
+                id:
+                  type: string
+                origin:
+                  type: string
+                destination:
+                  type: string
+                airline:
+                  type: string
+                model:
+                  type: string
+                passengers:
+                  type: array
+                  items:
+                    type: object
+                    required:
+                      - name
+                    properties:
+                      id:
+                        type: string
+                      name:
+                        type: string
+                      surname:
+                        type: string
+                      age:
+                        type: string
+              example:
+                id: f1
+                origin: Barcelona
+                destination: Madrid 
+                airline: Iberia
+                model: Airbus A330-300
+                passengers:
+                  - id: p1
+                    name: Roberto
+                    surname: García Martínez 
+                    age: '23'
+        description: Flight to create
+        required: true
+      responses:
+        '201':
+          description: Flight created
+          content:
+            application/json:
+              schema:
+                required:
+                  - id
+                properties:
+                  id:
+                    type: string
+                  origin:
+                    type: string
+                  destination:
+                    type: string
+                  airline:
+                    type: string
+                  model:
+                    type: string
+                  passengers:
+                    type: array
+                    items:
+                      type: object
+                      required:
+                        - name
+                      properties:
+                        id:
+                          type: string
+                        name: 
+                          type: string
+                        surname:
+                          type: string
+                        age:
+                          type: string
+                example:
+                  id: f1
+                  origin: Barcelona
+                  destination: Madrid 
+                  airline: Iberia
+                  model: Airbus A330-300
+                  passengers:
+                    - id: p1
+                      name: Roberto
+                      surname: García Martínez 
+                      age: '23'
+        '400':
+          description: Bad request
+  '/flights/{flightId}':
+    get:
+      tags:
+        - Flights
+      summary: Get a flight
+      description: Get an existing flight
+      operationId: getFlight
+      parameters:
+        - name: flightId
+          in: path
+          description: Id of the flight
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Flight found
+          content:
+            application/json:
+              schema:
+                required:
+                  - id
+                properties:
+                  id:
+                    type: string
+                  origin:
+                    type: string
+                  destination:
+                    type: string
+                  airline:
+                    type: string
+                  model:
+                    type: string
+                  passengers:
+                    type: array
+                    items:
+                      type: object
+                      required:
+                        - name
+                      properties:
+                        id:
+                          type: string
+                        name:
+                          type: string
+                        surname:
+                          type: string
+                        age:
+                          type: string
+                example:
+                  id: f2
+                  origin: Sevilla
+                  destination: Valencia
+                  airline: Vueling
+                  model: Airbus A320-214
+                  passengers:
+                    - id: p13
+                      name: María
+                      surname: Duarte Herrera
+                      age: '50'
+        '404':
+          description: Flight not found
+    delete:
+      tags:
+        - Flights
+      summary: Delete a flight
+      description: Delete an existing flight
+      operationId: deleteFlight
+      parameters:
+        - name: flightId
+          in: path
+          description: Id of the flight
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Flight deleted
+        '404':
+          description: Flight not found
+        
+  '/flights/{flightId}/{passengerId}':
+    get:
+      tags:
+        - Flights
+      summary: Get a passenger from a flight
+      description: Get a passenger from a flight
+      operationId: GetPassengerFromAFlight
+      parameters:
+        - name: flightId
+          in: path
+          description: Id of the flight
+          required: true
+          schema:
+            type: string
+        - name: passengerId
+          in: path
+          description: Id of the passenger
+          required: true
+          schema:
+            type: string
+      responses:
+        '201':
+          description: Passenger found from flight
+          content:
+            application/json:
+              schema:
+                required:
+                  - id
+                properties:
+                  id:
+                    type: string
+                  origin:
+                    type: string
+                  destination:
+                    type: string
+                  airline:
+                    type: string
+                  model:
+                    type: string
+                  passengers:
+                    type: array
+                    items:
+                      type: object
+                      required:
+                        - name
+                      properties:
+                        id:
+                          type: string
+                        name:
+                          type: string
+                        surname:
+                          type: string
+                        age:
+                          type: string
+                example:
+                  id: f2
+                  origin: Sevilla
+                  destination: Valencia
+                  airline: Vueling
+                  model: Airbus A320-214
+                  passengers:
+                    - id: p13
+                      name: María
+                      surname: Duarte Herrera
+                      age: '50'
+        '400':
+          description: Bad request
+        '404':
+          description: Fligt or passenger not found
+    post:
+      tags:
+        - Flights
+      summary: Add a passenger to a flight
+      description: Add a passenger to a flight
+      operationId: addPassengerToAFlight
+      requestBody:
+        content:
+          text/plain:
+            schema:
+              type: string
+      parameters:
+        - name: flightId
+          in: path
+          description: Id of the flight
+          required: true
+          schema:
+            type: string
+        - name: passengerId
+          in: path
+          description: Id of the passenger
+          required: true
+          schema:
+            type: string
+      responses:
+        '201':
+          description: Passenger added to flight
+          content:
+            application/json:
+              schema:
+                required:
+                  - id
+                properties:
+                  id:
+                    type: string
+                  origin:
+                    type: string
+                  destination:
+                    type: string
+                  airline:
+                    type: string
+                  model:
+                    type: string
+                  passengers:
+                    type: array
+                    items:
+                      type: object
+                      required:
+                        - name
+                      properties:
+                        id:
+                          type: string
+                        name:
+                          type: string
+                        surname:
+                          type: string
+                        age:
+                          type: string
+                example:
+                  id: f2
+                  origin: Sevilla
+                  destination: Valencia
+                  airline: Vueling
+                  model: Airbus A320-214
+                  passengers:
+                    - id: p13
+                      name: María
+                      surname: Duarte Herrera
+                      age: '50'
+        '400':
+          description: Bad request
+        '404':
+          description: Fligt or passenger not found
+    delete:
+      tags:
+        - Flights
+      summary: Delete a passenger from a flight
+      description: Delete a passenger from a flight
+      operationId: deletePassengerFromAFlight
+      parameters:
+        - name: flightId
+          in: path
+          description: Id of the flight
+          required: true
+          schema:
+            type: string
+        - name: passengerId
+          in: path
+          description: Id of the passenger
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Passenger deleted from flight
+        '404':
+          description: Flight or passenger not found
