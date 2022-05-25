@@ -1,4 +1,4 @@
-package aiss.model.resources;
+package cityevents.model.resources.tests;
 
 import static org.junit.Assert.*;
 
@@ -9,10 +9,10 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.restlet.resource.ResourceException;
 
-import aiss.model.resources.CityResource;
-import aiss.model.resources.EventResource;
-import aiss.model.City;
-import aiss.model.Event;
+import cityevents.model.City;
+import cityevents.model.Event;
+import cityevents.model.resources.CityResource;
+import cityevents.model.resources.EventResource;
 
 public class CityResourceTest {
 

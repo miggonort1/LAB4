@@ -1,4 +1,4 @@
-package aiss.model.resources;
+package cityevents.model.resources.tests;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
@@ -10,8 +10,8 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import aiss.model.resources.FqasResource;
-import aiss.model.Fqas;
+import cityevents.model.Fqas;
+import cityevents.model.resources.FqasResource;
 
 public class FqaResourceTest {
 

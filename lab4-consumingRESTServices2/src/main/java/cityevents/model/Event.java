@@ -1,4 +1,4 @@
-package aiss.model;
+package cityevents.model;
 
 import java.util.HashMap;
 import java.util.Map;

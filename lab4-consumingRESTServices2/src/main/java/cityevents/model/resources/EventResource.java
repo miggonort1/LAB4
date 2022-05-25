@@ -1,4 +1,4 @@
-package aiss.model.resources;
+package cityevents.model.resources;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -6,7 +6,7 @@ import java.util.Collection;
 import org.restlet.resource.ClientResource;
 import org.restlet.resource.ResourceException;
 
-import aiss.model.Event;
+import cityevents.model.Event;
 
 public class EventResource {
 	
