@@ -63,6 +63,11 @@ public class Event {
 			String eventLocation, String eventDate, String eventPrice) {
 		// TODO Auto-generated constructor stub
 	}
+	
+	public Event(String name, String description) {
+		this.name = name;
+		this.description = description;
+	}
 
 	@JsonProperty("id")
     public String getId() {
