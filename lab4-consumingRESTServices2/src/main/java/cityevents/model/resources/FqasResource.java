@@ -19,12 +19,10 @@ public class FqasResource {
 		try {
 			cr = new ClientResource(uri);
 			fqas = cr.get(Fqas[].class);
-			
 		} catch (ResourceException re) {
 			System.err.println("Error when retrieving all fqas: " + cr.getResponse().getStatus());
 			throw re;
 		}
-		
 		return Arrays.asList(fqas);
 	}
 	
@@ -35,11 +33,9 @@ public class FqasResource {
 		try {
 			cr = new ClientResource(uri + "/" + fqaId);
 			list = cr.get(Fqas.class);
-			
 		} catch (ResourceException re) {
 			System.err.println("Error when retrieving the fqa: " + cr.getResponse().getStatus());
 		}
-		
 		return list;
 	}
 	

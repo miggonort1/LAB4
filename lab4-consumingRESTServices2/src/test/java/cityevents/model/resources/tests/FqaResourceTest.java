@@ -20,82 +20,117 @@ public class FqaResourceTest {
 	
 	@BeforeClass
 	public static void setup() throws Exception {
-		
-		// Test fqa 1
-		fqa1 = sr.addFqa(new Fqas("id","question","answer"));
-		
-		
+		// Test: Examples of fqas to do the tests added to the API
+		fqa1 = sr.addFqa(new Fqas("Can I bring an Umbrella","Please no umbrellas, they block the view of others."));
+		fqa2 = sr.addFqa(new Fqas("Can I bring my dog","Please no umbrellas, Leashed dogs are always welcome, but we would like for you to consider a few things before bringing your pet."));
+		fqa3 = sr.addFqa(new Fqas("Can I smoke on the park","You are not allowed to smoke on public zones."));
+		fqa4 = sr.addFqa(new Fqas("What sort of public transportation is available","You only have 2 options, using train and bus."));
 	}
 
 	@AfterClass
 	public static void tearDown() throws Exception {
+		// Test: Delete all the fqas created on the API
 		sr.deleteFqa(fqa1.getId());
 		sr.deleteFqa(fqa2.getId());
+		sr.deleteFqa(fqa3.getId());
 	}
 	
 	@Test
 	public void testGetAll() {
-		Collection<Fqas> fqa = sr.getFqas();
+		System.out.println("----- TEST: GET ALL FQAS -----");
+		// Test: Receive all the existing fqas on the API
+		Collection<Fqas> fqas = sr.getFqas();
 		
-		assertNotNull("The collection of fqas is null", fqa);
+		// Check that the collection received is not null
+		assertNotNull("Error: The collection of fqas is null", fqas);
 		
-		// Show result
-		System.out.println("Listing all fqas:");
-		int i=1;
-		for (Fqas f : fqa) {
-			System.out.println("Event " + i++ + " : " + f.getQuestion() +f.getAnswer()+" (ID=" + f.getId() + ")");
-		}
+		// Show all the fqas
+		fqas.stream().forEach(System.out::println);
 	}
 
 	@Test
 	public void testGetFqa() {
+		System.out.println("----- TEST: GET FQA -----");
+		// Test: Get an existing fqa of the API
 		Fqas f = sr.getFqa(fqa1.getId());
+		// Test: Get a non existing fqa of the API
+		//Fqas f = sr.getFqa("f300");
 		
-		assertEquals("The id of the fqas do not match", fqa1.getId(), f.getId());
-		assertEquals("The name of the fqas do not match", fqa1.getQuestion(), f.getQuestion());
+		// Check that the fqa received correspond to the fqa created
+		assertEquals("Error: The id of the fqa do not match", fqa1.getId(), f.getId());
+		assertEquals("Error: The question of the fqa do not match", fqa1.getQuestion(), f.getQuestion());
+		assertEquals("Error: The answer of the fqa do not match", fqa1.getAnswer(), f.getAnswer());
 		
-		// Show result
-		System.out.println("Fqa id: " +  f.getId());
-		System.out.println("Fqa question: " +  f.getQuestion());
-
-	}
+		// Show the existing fqa
+		System.out.println(f);
+	}	
 
 	@Test
-	public void testAddFqa() {
-		String fqaQuestion = "Add fqa test question";
-		String fqaAnswer = "Add fqa test answer";
+	public void testAddFqa() {		
+		System.out.println("----- TEST: ADD FQA -----");
+		// Test: Add a new fqa
+		String fQuestion = "What items are prohibited?";
+		String fAnswer =  "The following are prohibited: tents, umbrellas, grills, portable generators, items...";
+		Fqas f = sr.addFqa(new Fqas(fQuestion, fAnswer));
 		
+		// Test: Add an existing fqa (still add a new fqa)
+		//String fQuestion = fqa1.getQuestion();
+		//String fAnswer = fqa1.getAnswer();
+		//Fqas f = sr.addFqa(fqa1);
 		
-		fqa4 = sr.addFqa(new Fqas(fqaQuestion,fqaAnswer));
+		// Check if the fqa fields correspond to the fqa sent
+		assertNotNull("Error: The fqa is null", f);
+		assertEquals("Error: The fqa's question has not been setted correctly", fQuestion, f.getQuestion());
+		assertEquals("Error: The fqa's answer has not been setted correctly", fAnswer, f.getAnswer());
 		
-		assertNotNull("Error when adding the fqa", fqa4);
-		assertEquals("The fqa's question has not been setted correctly", fqaQuestion, fqa4.getQuestion());
-		assertEquals("The fqa's answer has not been setted correctly", fqaAnswer, fqa4.getAnswer());
+		// Show the existing fqa
+		System.out.println(f);
+		sr.deleteFqa(f.getId());
 	}
 
 	@Test
 	public void testUpdateFqa() {
-		String fqaQuestion = "Updated question";
-
-		// Update city
-		fqa1.setQuestion(fqaQuestion); 
-
+		System.out.println("----- TEST: UPDATE FQA -----");
+		// Test: Update an existing fqa
+		String fQuestion = "Updated question";
+		fqa1.setQuestion(fQuestion); 
 		boolean success = sr.updateFqa(fqa1);
 		
-		assertTrue("Error when updating the fqa", success);
+		// Test: Update a non existing fqa
+		//String fQuestion = "Updated question";
+		//Fqas fUpdate = new Fqas("This fqa is not on the list", "");
+		//fUpdate.setQuestion(fQuestion);
+		//boolean success = sr.updateFqa(fUpdate);
 		
+		// Check if the fqa was updated with the content
+		assertTrue("Error: Error when updating the fqa", success);
 		Fqas f  = sr.getFqa(fqa1.getId());
-		assertEquals("The fqa´s quesrtion has not been updated correctly", fqaQuestion, f.getQuestion());
+		assertEquals("Error: The fqa´s question has not been updated correctly", fQuestion, f.getQuestion());
 
+		// Show the updated fqa
+		System.out.println(f);
+		//sr.deleteFqa(fUpdate.getId());
 	}
 
 	@Test
 	public void testDeleteFqa() {
-		boolean success = sr.deleteFqa(fqa3.getId());
-		assertTrue("Error when deleting the fqa", success);
+		System.out.println("----- TEST: REMOVE FQA -----");
+		// Test: Delete an existing fqa
+		boolean success = sr.deleteFqa(fqa4.getId());
 		
-		Fqas f = sr.getFqa(fqa3.getId());
-		assertNull("The fqa has not been deleted correctly", f);
+		// Test: Delete a non existing fqa
+		//boolean success = sr.deleteFqa("f90");
+		
+		//Check if the fqa was removed
+		assertTrue("Error: Error when deleting the fqa", success);
+		Fqas f = sr.getFqa(fqa4.getId());
+		//Fqas f = sr.getFqa("f90");
+		assertNull("Error: The fqa has not been deleted correctly", f);
+		
+		// Show the removed fqa message
+		if (f == null) {
+			System.out.println("The fqa was removed ? " + success);
+		}
 	}
 
 }

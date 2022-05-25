@@ -29,13 +29,16 @@ public class Fqas {
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
     public Fqas() {}
-    
-    public Fqas(String fqaQuestion, String fqaAnswer) {
-		// TODO Auto-generated constructor stub
-	}
 
-	public Fqas(String string, String string2, String string3) {
-		// TODO Auto-generated constructor stub
+	public Fqas(String question, String answer) {
+		this.question = question;
+		this.answer = answer;
+	}
+	
+	public Fqas(String id, String question, String answer) {
+		this.id = id;
+		this.question = question;
+		this.answer = answer;
 	}
 
 	@JsonProperty("id")
@@ -78,4 +81,12 @@ public class Fqas {
         this.additionalProperties.put(name, value);
     }
 
+	@Override
+	public String toString() {
+		String id = "Id: " + this.getId() + "\n";
+		String question = "Question: " + this.getQuestion() + "\n";
+		String answer = "Answer: " + this.getAnswer() + "\n";
+		return id + question + answer;
+	}
+    
 }
