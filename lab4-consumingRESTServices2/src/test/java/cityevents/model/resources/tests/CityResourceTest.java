@@ -22,7 +22,7 @@ public class CityResourceTest {
 	@BeforeClass
 	public static void setUp() throws Exception {
 		
-		city1 = cr.addCity(new City("Madrid", "Capital of Spain and one of the great European cities"));
+		city1 = cr.addCity(new City("Madrid", "Capital of Spain and one of the great European cities."));
 		city2 = cr.addCity(new City("London", "Capital of England, a beautiful city in winter"));
 		city3 = cr.addCity(new City("Helsinki", "Capital of Finland, a very cold city"));
 		
