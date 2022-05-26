@@ -40,7 +40,6 @@ public class EventResourceTest {
 		er.deleteEvent(event1.getId());
 		er.deleteEvent(event2.getId());
 		er.deleteEvent(event3.getId());
-		er.deleteEvent(event4.getId());
 	}
 	
 	@Test
@@ -100,10 +99,10 @@ public class EventResourceTest {
 
 	@Test
 	public void testDeleteEvent() {
-		boolean success = er.deleteEvent(event3.getId());
+		boolean success = er.deleteEvent(event4.getId());
 		assertTrue("Error when deleting the event", success);
 		
-		Event cl = er.getEvent(event3.getId());
+		Event cl = er.getEvent(event4.getId());
 		assertNull("The event has not been deleted correctly", cl);
 	}
 	
