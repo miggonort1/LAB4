@@ -7,8 +7,6 @@ import java.util.Collection;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.restlet.resource.ResourceException;
-
 import cityevents.model.City;
 import cityevents.model.Event;
 import cityevents.model.resources.CityResource;
@@ -24,12 +22,12 @@ public class CityResourceTest {
 	@BeforeClass
 	public static void setUp() throws Exception {
 		
-		city1 = cr.addCity(new City("Test city 1"));
-		city2 = cr.addCity(new City("Test city 2"));
-		city3 = cr.addCity(new City("Test city 3"));
+		city1 = cr.addCity(new City("Madrid", "Capital of Spain and one of the great European cities"));
+		city2 = cr.addCity(new City("London", "Capital of England, a beautiful city in winter"));
+		city3 = cr.addCity(new City("Helsinki", "Capital of Finland, a very cold city"));
 		
 	
-		event = er.addEvent(new Event("Test id","Test name","Test description","Test organizer", "Test category", "Test location", "Test date", "Test price"));
+		event = er.addEvent(new Event("2","Nothern Lights","Beautiful lights on Finland","None", "Nature", "Landscape", "autumn", "free"));
 		if(event!=null)
 			cr.addEventToCity(city1.getId(), event.getId());
 	}
@@ -37,10 +35,8 @@ public class CityResourceTest {
 	@AfterClass
 	public static void tearDown() throws Exception {
 		cr.deleteCity(city1.getId());
+		cr.deleteCity(city2.getId());
 		cr.deleteCity(city3.getId());
-		cr.deleteCity(city4.getId());
-		if(event!=null)
-			er.deleteEvent(event.getId());
 	}
 
 	@Test
@@ -73,8 +69,8 @@ public class CityResourceTest {
 
 	@Test
 	public void testAddCity() {
-		String cityName = "Add city test title";
-		String cityDescription = "Add city test description";
+		String cityName = "Rome";
+		String cityDescription = "Capital of Italy";
 		
 		city4 = cr.addCity(new City(cityName,cityDescription));
 		
@@ -119,7 +115,7 @@ public class CityResourceTest {
 	@Test
 	public void testDeleteEventFromCity() {
 		if(event!=null) {
-			boolean success = cr.deleteEventFromCity(city3.getId(), event.getId());
+			boolean success = cr.deleteEventFromCity(city1.getId(), event.getId());
 			assertTrue("Error when deleting the event to the city", success);
 		}		
 	}
