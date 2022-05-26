@@ -22,21 +22,17 @@ public class CityResourceTest {
 	@BeforeClass
 	public static void setUp() throws Exception {
 		
-		city1 = cr.addCity(new City("Madrid", "Capital of Spain and one of the great European cities."));
+		city1 = cr.addCity(new City("Madrid", "Capital of Spain and one of the great European cities"));
 		city2 = cr.addCity(new City("London", "Capital of England, a beautiful city in winter"));
 		city3 = cr.addCity(new City("Helsinki", "Capital of Finland, a very cold city"));
-		
+		city4 = cr.addCity(new City("Berlin", "Capital of Germany"));
 	
-		event = er.addEvent(new Event("2","Nothern Lights","Beautiful lights on Finland","None", "Nature", "Landscape", "autumn", "free"));
-		if(event!=null)
-			cr.addEventToCity(city1.getId(), event.getId());
+		
 	}
 
 	@AfterClass
 	public static void tearDown() throws Exception {
 		cr.deleteCity(city1.getId());
-		cr.deleteCity(city2.getId());
-		cr.deleteCity(city3.getId());
 	}
 
 	@Test
@@ -72,11 +68,11 @@ public class CityResourceTest {
 		String cityName = "Rome";
 		String cityDescription = "Capital of Italy";
 		
-		city4 = cr.addCity(new City(cityName,cityDescription));
+		city3 = cr.addCity(new City(cityName,cityDescription));
 		
-		assertNotNull("Error when adding the city", city4);
-		assertEquals("The city's name has not been setted correctly", cityName, city4.getName());
-		assertEquals("The city's description has not been setted correctly", cityDescription, city4.getDescription());
+		assertNotNull("Error when adding the city", city3);
+		assertEquals("The city's name has not been setted correctly", cityName, city3.getName());
+		assertEquals("The city's description has not been setted correctly", cityDescription, city3.getDescription());
 	}
 
 	@Test
@@ -115,7 +111,7 @@ public class CityResourceTest {
 	@Test
 	public void testDeleteEventFromCity() {
 		if(event!=null) {
-			boolean success = cr.deleteEventFromCity(city1.getId(), event.getId());
+			boolean success = cr.deleteEventFromCity(city4.getId(), event.getId());
 			assertTrue("Error when deleting the event to the city", success);
 		}		
 	}
