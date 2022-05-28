@@ -39,6 +39,7 @@ public class CityResource {
 			
 		} catch (ResourceException re) {
 			System.err.println("Error when retrieving the city: " + cr.getResponse().getStatus());
+			throw re;
 		}
 		
 		return list;
@@ -59,6 +60,7 @@ public class CityResource {
 			
 		} catch (ResourceException re) {
 			System.err.println("Error when adding the city: " + cr.getResponse().getStatus());
+			throw re;
 		}
 		
 		return resultCity;
@@ -92,6 +94,7 @@ public class CityResource {
 		} catch (ResourceException re) {
 			System.err.println("Error when updating the city: " + cr.getResponse().getStatus());
 			success = false;
+			throw re;
 		}
 		
 		return success;
@@ -124,7 +127,7 @@ public class CityResource {
 			cr.setEntityBuffering(true);
 			cr.delete();
 		} catch (ResourceException e){
-			System.err.println("Error al intentar eliminar este evento de la ciudad"+cr.getResponse().getStatus());
+			System.err.println("Error trying to delete the event from the city"+cr.getResponse().getStatus());
 			exito = false;
 			throw e;
 		}

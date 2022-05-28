@@ -35,6 +35,7 @@ public class FqasResource {
 			list = cr.get(Fqas.class);
 		} catch (ResourceException re) {
 			System.err.println("Error when retrieving the fqa: " + cr.getResponse().getStatus());
+			throw re;
 		}
 		return list;
 	}
@@ -68,6 +69,7 @@ public class FqasResource {
 		} catch (ResourceException re) {
 			System.err.println("Error when updating the fqa: " + cr.getResponse().getStatus());
 			success = false;
+			throw re;
 		}
 		
 		return success;

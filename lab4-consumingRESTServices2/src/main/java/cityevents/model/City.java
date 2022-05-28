@@ -3,6 +3,8 @@ package cityevents.model;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
 import javax.annotation.Generated;
 import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
@@ -92,5 +94,14 @@ public class City {
     public void setAdditionalProperty(String name, Object value) {
         this.additionalProperties.put(name, value);
     }
+    
+	@Override
+	public String toString() {
+		String id = "Id: " + this.getId() + "\n";
+		String name = "Name: " + this.getName() + "\n";
+		String description = "Description: " + this.getDescription() + "\n";
+		String events = "Events: \n" + this.getEvents() + "\n";
+		return id + name + description + events;
+	}
 
 }

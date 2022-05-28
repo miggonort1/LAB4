@@ -38,6 +38,7 @@ public class EventResource {
 			
 		} catch (ResourceException re) {
 			System.err.println("Error when retrieving the event: " + cr.getResponse().getStatus());
+			throw re;
 		}
 		
 		return list;
@@ -54,6 +55,7 @@ public class EventResource {
 			
 		} catch (ResourceException re) {
 			System.err.println("Error when adding the event: " + cr.getResponse().getStatus());
+			throw re;
 		}
 		
 		return resultEvent;
@@ -72,6 +74,7 @@ public class EventResource {
 		} catch (ResourceException re) {
 			System.err.println("Error when updating the event: " + cr.getResponse().getStatus());
 			success = false;
+			throw re;
 		}
 		
 		return success;

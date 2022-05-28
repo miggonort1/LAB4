@@ -61,7 +61,13 @@ public class Event {
 
 	public Event(String eventName, String eventDescription, String eventOrganizer, String eventCategory,
 			String eventLocation, String eventDate, String eventPrice) {
-		// TODO Auto-generated constructor stub
+		this.name = eventName;
+		this.description = eventDescription;
+		this.organizer = eventOrganizer;
+		this.category = eventCategory;
+		this.location = eventLocation;
+		this.date = eventDate;
+		this.price = eventPrice;
 	}
 	
 	public Event(String name, String description) {
@@ -168,5 +174,14 @@ public class Event {
     public void setAdditionalProperty(String name, Object value) {
         this.additionalProperties.put(name, value);
     }
+    
+	@Override
+	public String toString() {
+		String id = "Id: " + this.getId() + "\n";
+		String name = "Name: " + this.getName() + "\n";
+		String description = "Description: " + this.getDescription() + "\n";
+		String fqa = "Fqa: \n" + this.getFqas() + "\n";
+		return id + name + description + fqa;
+	}
 
 }
